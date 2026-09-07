@@ -1,0 +1,81 @@
+---
+import PublicationCard from '../PublicationCard.astro';
+import { getCollection } from 'astro:content';
+
+const publications = await getCollection('publications');
+
+const themeLabels: Record<string, string> = {
+  'financial-safety': 'Financial Safety & Regulatory NLP',
+  multilingual: 'Multilingual & Cross-Cultural NLP',
+  multimodal: 'Multimodal & Affective Computing',
+  'applied-nlp': 'Applied NLP & Evaluation',
+};
+
+const dated = publications.filter((p) => p.data.year !== undefined);
+const years = [...new Set(dated.map((p) => p.data.year!))].sort((a, b) => b - a);
+
+const byYear = years.map((year) => ({
+  year,
+  entries: dated
+    .filter((p) => p.data.year === year)
+    .sort((a, b) => a.data.order - b.data.order),
+}));
+
+const ongoing = publications
+  .filter((p) => p.data.theme === 'ongoing')
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="research" class="mx-auto max-w-4xl scroll-mt-24 px-6 py-14">
+  <h2 class="font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>
+    Publications
+  </h2>
+  <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    Ten publications spanning financial safety, multilingual and cross-cultural NLP, multimodal affect
+    recognition, and applied evaluation — seven published, one accepted, and two under review — with
+    more to come, plus two research threads in progress. Sorted by year.
+  </p>
+
+  <div class="mt-10 space-y-14">
+    {byYear.map((group) => (
+      <div data-reveal>
+        <h3 class="font-serif text-3xl font-semibold text-stone-300 dark:text-stone-700">{group.year}</h3>
+        <div class="mt-2">
+          {group.entries.map((pub) => (
+            <PublicationCard
+              title={pub.data.title}
+              status={pub.data.status}
+              venue={pub.data.venue}
+              date={pub.data.date}
+              tag={pub.data.tag}
+              preprint={pub.data.preprint}
+              authors={pub.data.authors}
+              summary={pub.data.summary}
+              link={pub.data.link}
+            />
+          ))}
+        </div>
+        <p class="mt-3 text-xs text-stone-400 dark:text-stone-600">
+          {[...new Set(group.entries.map((p) => themeLabels[p.data.theme]).filter(Boolean))].join(' · ')}
+        </p>
+      </div>
+    ))}
+
+    <div data-reveal>
+      <h3 class="font-serif text-3xl font-semibold text-stone-300 dark:text-stone-700">Ongoing</h3>
+      <div class="mt-2">
+        {ongoing.map((pub) => (
+          <PublicationCard
+            title={pub.data.title}
+            status={pub.data.status}
+            tag={pub.data.tag}
+            preprint={pub.data.preprint}
+            advisor={pub.data.advisor}
+            summary={pub.data.summary}
+            link={pub.data.link}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

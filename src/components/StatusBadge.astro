@@ -1,0 +1,26 @@
+---
+interface Props {
+  status: 'under-review' | 'accepted' | 'published' | 'in-progress';
+}
+
+const { status } = Astro.props;
+
+const dotStyles: Record<Props['status'], string> = {
+  'under-review': 'bg-amber-500',
+  accepted: 'bg-sky-600',
+  published: 'bg-emerald-600',
+  'in-progress': 'bg-stone-400',
+};
+
+const labels: Record<Props['status'], string> = {
+  'under-review': 'Under Review',
+  accepted: 'Accepted',
+  published: 'Published',
+  'in-progress': 'In Progress',
+};
+---
+
+<span class="inline-flex items-center gap-1.5 rounded-full border border-stone-200 px-2.5 py-0.5 text-xs font-medium whitespace-nowrap text-stone-600 dark:border-stone-700 dark:text-stone-400">
+  <span class:list={['size-1.5 rounded-full', dotStyles[status]]}></span>
+  {labels[status]}
+</span>

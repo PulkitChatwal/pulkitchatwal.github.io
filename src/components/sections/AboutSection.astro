@@ -1,0 +1,94 @@
+---
+import { site, highlights, interests, education } from '../../data/site';
+import { news } from '../../data/news';
+
+const [firstName, ...rest] = site.name.split(' ');
+const lastName = rest.join(' ');
+---
+
+<section id="about" class="mx-auto max-w-4xl scroll-mt-24 px-6 pt-16 pb-12 sm:pt-20">
+  <h1 class="font-serif text-5xl tracking-tight text-stone-900 sm:text-6xl dark:text-stone-100" data-reveal>
+    <span class="font-bold">{firstName}</span> <span class="font-light">{lastName}</span>
+  </h1>
+
+  <p class="mt-6 text-stone-600 dark:text-stone-400" data-reveal>Hi, I am Pulkit — {site.title}.</p>
+
+  <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    AI Engineer bridging research and production — seven published papers in financial safety,
+    multilingual NLP, and multimodal alignment, with more accepted and under review, and one of the
+    founding engineers and part of the lead developer team on{' '}
+    <a
+      href={site.voxxUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="font-medium text-accent-700 underline decoration-accent-300 underline-offset-2 hover:decoration-accent-600 dark:text-accent-400"
+    >
+      Voxx Agent
+    </a>, a voice AI product deployed across enterprise clients.
+  </p>
+
+  <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    I recently graduated with an Integrated Dual Degree (B.Tech + M.Tech) in CSE & Artificial
+    Intelligence from the Rajiv Gandhi Institute of Petroleum Technology (RGIPT), an Institute of
+    National Importance, where I was advised by {site.advisor}. My thesis was{' '}
+    <em>{site.thesis}</em>. I am applying for PhD positions in LLM safety, evaluation, and multilingual NLP.
+  </p>
+
+  <p class="mt-6 font-mono text-sm leading-relaxed text-stone-500 dark:text-stone-500" data-reveal>
+    Uttarakhand, India
+  </p>
+
+  <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" data-reveal>
+    <a href={site.scholar} target="_blank" rel="noopener noreferrer" class="text-accent-700 hover:underline dark:text-accent-400">Google Scholar</a>
+    <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-accent-700 hover:underline dark:text-accent-400">GitHub</a>
+    <a href={`mailto:${site.email}`} class="text-accent-700 hover:underline dark:text-accent-400">{site.email}</a>
+    <a href={site.resumeUrl} class="text-accent-700 hover:underline dark:text-accent-400">CV</a>
+  </div>
+
+  <div class="mt-8 flex flex-wrap gap-x-6 gap-y-1 text-sm text-stone-500 dark:text-stone-500" data-reveal>
+    {highlights.map((item) => <span>{item}</span>)}
+  </div>
+
+  <h2 class="mt-16 font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>Interests</h2>
+  <div class="mt-5 flex flex-wrap gap-2">
+    {interests.map((item) => (
+      <span
+        class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-700 dark:border-stone-800 dark:text-stone-300"
+        data-reveal
+      >
+        {item}
+      </span>
+    ))}
+  </div>
+
+  <h2 class="mt-16 font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>Education</h2>
+  <dl class="mt-5">
+    {education.map((item) => (
+      <div class="grid gap-1 border-t border-stone-200 py-4 sm:grid-cols-[8rem_1fr] sm:gap-4 dark:border-stone-800" data-reveal>
+        <dt class="font-mono text-sm text-stone-500 dark:text-stone-500">{item.period}</dt>
+        <dd>
+          <p class="font-medium text-stone-800 dark:text-stone-200">{item.degree}</p>
+          <p class="mt-0.5 text-[0.925rem] text-stone-600 dark:text-stone-400">{item.institution}</p>
+          {item.designation && (
+            <p class="mt-0.5 text-[0.925rem] text-stone-600 italic dark:text-stone-400">
+              {item.designation}
+            </p>
+          )}
+          {item.note && (
+            <p class="mt-1 text-sm text-stone-500 dark:text-stone-500">{item.note}</p>
+          )}
+        </dd>
+      </div>
+    ))}
+  </dl>
+
+  <h2 class="mt-16 font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>News</h2>
+  <dl class="mt-5">
+    {news.map((item) => (
+      <div class="grid gap-1 border-t border-stone-200 py-3 sm:grid-cols-[8rem_1fr] sm:gap-4 dark:border-stone-800" data-reveal>
+        <dt class="font-mono text-sm text-stone-500 dark:text-stone-500">{item.date}</dt>
+        <dd class="text-[0.925rem] leading-relaxed text-stone-600 dark:text-stone-400">{item.text}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

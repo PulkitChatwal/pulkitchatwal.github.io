@@ -1,0 +1,152 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { nav, site } from '../data/site';
+
+const { pathname } = Astro.url;
+const onePager = pathname === '/';
+// On the one-pager the nav scrolls to anchors; on a standalone page it links
+// back to the matching section of the homepage, and marks itself active.
+const isActive = (page: string) => !onePager && pathname.startsWith(page) && page !== '/';
+---
+
+<input type="checkbox" id="nav-toggle" class="peer hidden" />
+
+<header class="sticky top-0 z-40 border-b border-stone-200/70 bg-stone-50/90 backdrop-blur-sm dark:border-stone-800/70 dark:bg-stone-950/90">
+  <div class="mx-auto flex max-w-4xl items-center justify-between px-6 py-3.5">
+    <a href="/#about" class="font-serif text-base font-semibold tracking-tight text-stone-900 dark:text-stone-100">
+      {site.name}
+    </a>
+
+    <nav class="hidden items-center gap-6 md:flex">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          data-nav-link
+          data-section={item.id}
+          class:list={[
+            'nav-link text-sm transition-colors',
+            isActive(item.page)
+              ? 'font-medium text-accent-700 dark:text-accent-400'
+              : 'text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+      <ThemeToggle />
+    </nav>
+
+    <div class="flex items-center gap-2 md:hidden">
+      <ThemeToggle />
+      <label
+        for="nav-toggle"
+        aria-label="Toggle menu"
+        class="grid size-9 cursor-pointer place-items-center rounded-full border border-stone-300 text-stone-700 dark:border-stone-700 dark:text-stone-300"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="size-5">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </label>
+    </div>
+  </div>
+</header>
+
+<nav class="hidden border-b border-stone-200 bg-stone-50 px-6 py-3 peer-checked:block md:hidden dark:border-stone-800 dark:bg-stone-950">
+  <div class="mx-auto flex max-w-4xl flex-col gap-1">
+    {nav.map((item) => (
+      <a
+        href={item.href}
+        data-nav-link
+        data-section={item.id}
+        data-mobile-link
+        class:list={[
+          'nav-link rounded-lg px-3 py-2 text-sm',
+          isActive(item.page)
+            ? 'font-medium text-accent-700 dark:text-accent-400'
+            : 'text-stone-600 dark:text-stone-400',
+        ]}
+      >
+        {item.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script is:inline>
+  // This component renders at the top of <body>, so the sections it links to do
+  // not exist yet while this script parses. Wait for the full document.
+  (() => {
+    const init = () => {
+    // Close the mobile menu after tapping a link (it is a CSS checkbox toggle).
+    document.querySelectorAll('[data-mobile-link]').forEach((a) =>
+      a.addEventListener('click', () => {
+        const cb = document.getElementById('nav-toggle');
+        if (cb) cb.checked = false;
+      })
+    );
+
+    // Scroll-spy: only meaningful on the one-pager, where the sections exist.
+    const links = [...document.querySelectorAll('[data-nav-link]')];
+    const sections = links
+      .map((l) => document.getElementById(l.dataset.section))
+      .filter(Boolean);
+    if (sections.length < 2) return;
+
+    const ACTIVE = ['font-medium', 'text-accent-700', 'dark:text-accent-400'];
+    const IDLE = ['text-stone-600', 'dark:text-stone-400'];
+
+    const setActive = (id) => {
+      links.forEach((l) => {
+        const on = l.dataset.section === id;
+        l.classList.toggle('is-active', on);
+        ACTIVE.forEach((c) => l.classList.toggle(c, on));
+        IDLE.forEach((c) => l.classList.toggle(c, !on));
+      });
+    };
+
+    // Geometry-based rather than IntersectionObserver, so it keeps working in
+    // background/headless tabs where rendering steps may not run.
+    const pick = () => {
+      const line = 100; // just below the sticky header
+      let current = sections[0].id;
+      for (const s of sections) {
+        if (s.getBoundingClientRect().top <= line) current = s.id;
+      }
+      // At the very bottom, always highlight the last section.
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+        current = sections[sections.length - 1].id;
+      }
+      setActive(current);
+    };
+
+    // Time-based throttle rather than requestAnimationFrame: rAF is paused in
+    // background tabs, which would leave the nav stuck on the wrong section.
+    let last = 0;
+    let timer = 0;
+    const onScroll = () => {
+      const now = Date.now();
+      if (now - last > 100) {
+        last = now;
+        pick();
+      } else {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          last = Date.now();
+          pick();
+        }, 100);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('load', pick);
+    pick();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

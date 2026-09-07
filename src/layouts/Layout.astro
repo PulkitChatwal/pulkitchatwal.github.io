@@ -1,0 +1,43 @@
+---
+import TopNav from '../components/TopNav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Pulkit Chatwal — AI / Machine Learning Engineer. Research profile covering financial safety, multilingual NLP, and multimodal alignment.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} · Pulkit Chatwal</title>
+
+    <script is:inline>
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <TopNav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+  </body>
+</html>

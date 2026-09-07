@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import { achievements } from '../../data/achievements';
+import { photoCaptions } from '../../data/photoCaptions';
+
+const photoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/achievements/*.{jpeg,jpg,png,webp,avif}',
+  { eager: true }
+);
+
+// Filename (without extension) is the caption key; falls back to a readable
+// version of the filename so a dropped-in photo is never left unlabelled.
+const photos = Object.entries(photoModules)
+  .map(([path, mod]) => {
+    const filename = path.split('/').pop()!.replace(/\.[^.]+$/, '');
+    return {
+      src: mod.default,
+      caption: photoCaptions[filename] ?? filename.replace(/[-_]/g, ' '),
+    };
+  })
+  .sort((a, b) => a.caption.localeCompare(b.caption));
+---
+
+<section id="achievements" class="mx-auto max-w-4xl scroll-mt-24 px-6 py-14">
+  <h2 class="font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>
+    Achievements
+  </h2>
+  <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    National recognitions from the Ministry of Education, Govt. of India, and presentations at
+    international venues.
+  </p>
+
+  <ol class="mt-10 space-y-6 border-l border-stone-200 pl-6 dark:border-stone-800">
+    {achievements.map((item) => (
+      <li class="relative" data-reveal>
+        <span class="absolute top-1.5 -left-[1.6rem] size-2.5 rounded-full bg-accent-500"></span>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 class="font-serif text-lg font-medium text-stone-900 dark:text-stone-100">{item.title}</h3>
+          <span class="text-sm font-medium text-stone-500 dark:text-stone-500">{item.date}</span>
+        </div>
+        <p class="mt-1 text-sm font-medium text-accent-700 dark:text-accent-400">
+          {item.org}{'amount' in item && item.amount ? ` · ${item.amount}` : ''}
+        </p>
+        <p class="mt-2 max-w-2xl text-[0.95rem] leading-relaxed text-stone-600 dark:text-stone-400">
+          {item.description}
+        </p>
+      </li>
+    ))}
+  </ol>
+
+  <h3 class="mt-12 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
+    Photo gallery
+  </h3>
+  {photos.length > 0 ? (
+    <div class="mt-5 grid gap-5 sm:grid-cols-3">
+      {photos.map((photo) => (
+        <figure data-reveal>
+          <Image
+            src={photo.src}
+            alt={photo.caption}
+            class="aspect-[3/2] w-full rounded-xl object-cover"
+            widths={[400, 800]}
+            sizes="(min-width: 640px) 33vw, 100vw"
+          />
+          <figcaption class="mt-2 font-mono text-xs leading-relaxed text-stone-500 dark:text-stone-500">
+            {photo.caption}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  ) : (
+    <div class="mt-5 rounded-2xl border border-dashed border-stone-300 p-10 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-500">
+      Photos coming soon — drop images into <code class="rounded bg-stone-200/70 px-1.5 py-0.5 dark:bg-stone-800">src/assets/achievements/</code> to populate this gallery.
+    </div>
+  )}
+</section>

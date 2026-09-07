@@ -1,0 +1,125 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../../data/site';
+import voxxScreenshot from '../../assets/projects/voxxagent-hero.png';
+
+const integrations = ['Roller', 'Acumatica', 'Optima Route', 'Salesforce', 'Google Sheets'];
+const voxxUrl = site.voxxUrl;
+
+const capabilities = [
+  {
+    name: 'End-to-end call automation',
+    detail: 'Handles inbound and outbound interactions without manual routing.',
+  },
+  {
+    name: 'Lead qualification & data capture',
+    detail: 'Converts conversation context into structured fields and intent tags.',
+  },
+  {
+    name: 'Workflow execution layer',
+    detail: 'Executes bookings, follow-ups, and status updates from live conversation signals.',
+  },
+  {
+    name: 'Context-aware conversational control',
+    detail: 'Maintains memory across turns and handles interruptions gracefully.',
+  },
+  {
+    name: 'Enterprise security & reliability',
+    detail: 'Auditable controls built for regulated production environments.',
+  },
+  {
+    name: 'Performance intelligence',
+    detail: 'Tracks call quality, latency, automation rate, and outcomes.',
+  },
+];
+---
+
+<section id="experience" class="mx-auto max-w-4xl scroll-mt-24 px-6 py-14">
+  <h2 class="font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>
+    Experience
+  </h2>
+
+  <article class="mt-8 rounded-2xl border border-stone-200 bg-white p-8 dark:border-stone-800 dark:bg-stone-900/40" data-reveal>
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h3 class="font-serif text-xl font-semibold text-stone-900 dark:text-stone-100">AI Engineer</h3>
+        <p class="mt-1 text-sm font-medium text-accent-700 dark:text-accent-400">Srinergy.ai · Remote, Columbia</p>
+        <p class="mt-1.5 text-sm">
+          <span class="text-stone-500 dark:text-stone-500">Product:</span>{' '}
+          <a
+            href={voxxUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 font-medium text-accent-700 hover:underline dark:text-accent-400"
+          >
+            voxxagent.ai
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-3">
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+          </a>
+        </p>
+      </div>
+      <span class="rounded-full bg-stone-100 px-3 py-1 text-sm font-medium text-stone-600 dark:bg-stone-800 dark:text-stone-300">
+        May 2025 – Present
+      </span>
+    </div>
+
+    <ul class="mt-6 space-y-4 text-[0.95rem] leading-relaxed text-stone-600 dark:text-stone-400">
+      <li>
+        One of the founding engineers and part of the lead developer team on{' '}
+        <a href={voxxUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-stone-800 underline decoration-accent-400 underline-offset-2 hover:text-accent-700 dark:text-stone-200 dark:hover:text-accent-400">Voxx Agent</a>,
+        an AI voice-agent deployed across multiple HyperKidz locations and Fidelity Direct Mortgage for real-time
+        customer interaction and automated call handling.
+      </li>
+      <li>
+        Integrated with {integrations.slice(0, -1).join(', ')}, and {integrations.at(-1)}.
+      </li>
+      <li>
+        Designed and executed an outbound calling campaign for the Anup Jalota event (Bay Area) on behalf of
+        Shankara Eye Foundation — 9,000+ calls.
+      </li>
+    </ul>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      {integrations.map((tool) => (
+        <span class="rounded-full border border-stone-200 px-3 py-1 text-xs font-medium text-stone-600 dark:border-stone-800 dark:text-stone-400">
+          {tool}
+        </span>
+      ))}
+    </div>
+  </article>
+
+  <h3 class="mt-12 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
+    The product
+  </h3>
+  <p class="mt-3 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    Voxx Agent is an enterprise voice-automation platform that handles inbound and outbound calls,
+    books appointments, and drives downstream workflows — pairing conversational intelligence with
+    a deterministic action layer so operations teams can automate with predictable behaviour.
+  </p>
+
+  <a href={voxxUrl} target="_blank" rel="noopener noreferrer" class="group mt-6 block" data-reveal>
+    <Image
+      src={voxxScreenshot}
+      alt="Voxx Agent landing page, showing an active AI agent handling a delivery exception with live intent, action, latency, and confidence telemetry."
+      class="w-full rounded-xl border border-stone-200 transition group-hover:border-accent-300 dark:border-stone-800 dark:group-hover:border-accent-700"
+      widths={[600, 1200]}
+      sizes="(min-width: 768px) 768px, 100vw"
+    />
+    <figcaption class="mt-2 font-mono text-xs text-stone-500 dark:text-stone-500">
+      voxxagent.ai — the live product surface.
+    </figcaption>
+  </a>
+
+  <h3 class="mt-10 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
+    Core capabilities
+  </h3>
+  <dl class="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+    {capabilities.map((cap) => (
+      <div data-reveal>
+        <dt class="font-medium text-stone-800 dark:text-stone-200">{cap.name}</dt>
+        <dd class="mt-1 text-sm leading-relaxed text-stone-600 dark:text-stone-400">{cap.detail}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

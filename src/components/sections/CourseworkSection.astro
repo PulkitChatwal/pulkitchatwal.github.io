@@ -1,0 +1,78 @@
+---
+import { competencies, coursework, stack } from '../../data/skills';
+---
+
+<section id="coursework" class="mx-auto max-w-4xl scroll-mt-24 px-6 py-14">
+  <h2 class="font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>
+    Coursework &amp; Skills
+  </h2>
+  <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    Research skills built through published work — each area links to the papers where it was applied —
+    alongside the coursework and tools behind them.
+  </p>
+
+  <h3 class="mt-10 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
+    Research competencies
+  </h3>
+  <div class="mt-4">
+    {competencies.map((item) => (
+      <div class="grid gap-2 border-t border-stone-200 py-6 sm:grid-cols-[13rem_1fr] sm:gap-8 dark:border-stone-800" data-reveal>
+        <h4 class="font-medium text-stone-900 dark:text-stone-100">{item.area}</h4>
+        <div>
+          <p class="font-mono text-xs leading-relaxed text-stone-500 dark:text-stone-500">{item.methods}</p>
+          <p class="mt-2 text-[0.925rem] leading-relaxed text-stone-600 dark:text-stone-400">{item.detail}</p>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <span class="text-xs text-stone-400 dark:text-stone-600">Applied in</span>
+            {item.evidence.map((tag) => (
+              <a
+                href="#research"
+                class="rounded border border-stone-200 px-2 py-0.5 font-mono text-[0.7rem] text-stone-500 transition-colors hover:border-accent-300 hover:text-accent-700 dark:border-stone-800 dark:text-stone-500 dark:hover:border-accent-700 dark:hover:text-accent-400"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h3 class="mt-12 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
+    Core coursework
+  </h3>
+  <p class="mt-2 text-sm text-stone-500 dark:text-stone-500" data-reveal>
+    Integrated M.Tech, Computer Science &amp; Engineering with Artificial Intelligence — RGIPT.
+  </p>
+  <dl class="mt-4">
+    {coursework.map((group) => (
+      <div class="grid gap-2 border-t border-stone-200 py-4 sm:grid-cols-[13rem_1fr] sm:gap-8 dark:border-stone-800" data-reveal>
+        <dt class="text-sm font-medium text-stone-500 dark:text-stone-400">{group.group}</dt>
+        <dd class="flex flex-wrap gap-2">
+          {group.courses.map((course) => (
+            <span class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-700 dark:border-stone-800 dark:text-stone-300">
+              {course}
+            </span>
+          ))}
+        </dd>
+      </div>
+    ))}
+  </dl>
+
+  <h3 class="mt-12 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
+    Tools &amp; stack
+  </h3>
+  <dl class="mt-4">
+    {stack.map((group) => (
+      <div class="grid gap-2 border-t border-stone-200 py-4 sm:grid-cols-[13rem_1fr] sm:gap-8 dark:border-stone-800" data-reveal>
+        <dt class="text-sm font-medium text-stone-500 dark:text-stone-400">{group.group}</dt>
+        <dd class="flex flex-wrap gap-2">
+          {group.tags.map((tag) => (
+            <span class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-700 dark:border-stone-800 dark:text-stone-300">
+              {tag}
+            </span>
+          ))}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</section>
