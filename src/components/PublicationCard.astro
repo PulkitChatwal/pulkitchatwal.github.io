@@ -22,6 +22,7 @@ interface Props {
   link?: string;
   figure?: string;
   figureCaption?: string;
+  figureCaptionInImage?: boolean;
   resultsCaption?: string;
   resultsColumns?: string[];
   resultsRows?: string[][];
@@ -29,7 +30,7 @@ interface Props {
 
 const {
   title, status, venue, date, tag, preprint, authors, advisor, summary, link,
-  figure, figureCaption, resultsCaption, resultsColumns, resultsRows,
+  figure, figureCaption, figureCaptionInImage, resultsCaption, resultsColumns, resultsRows,
 } = Astro.props;
 
 const figureImage = figure ? figures[`/src/assets/papers/${figure}`]?.default : undefined;
@@ -101,8 +102,11 @@ const hasResults = !!(resultsColumns?.length && resultsRows?.length);
           widths={[440, 880]}
           sizes="(min-width: 768px) 576px, 100vw"
         />
-        {/* These figures carry their caption inside the image, so `figureCaption`
-            is used as alt text for screen readers rather than printed twice. */}
+        {figureCaption && !figureCaptionInImage && (
+          <figcaption class="mt-2 max-w-xl text-xs leading-relaxed text-stone-500 dark:text-stone-500">
+            {figureCaption}
+          </figcaption>
+        )}
       </figure>
     )}
 

@@ -11,6 +11,12 @@ authors:
   - "A. Agarwal"
   - "A. K. Jaiswal"
   - "M. Saify"
+figure: "beyond-refusal-results.png"
+figureCaption: >-
+  Multi-turn financial jailbreaks across seven models, ordered safest to least safe.
+  Left: attack success rate at turns 2-4. Right: Partial Compliance Rate, Safety
+  Erosion Rate, and Harm Depth Score. Lower is safer; attack success peaks at turn 3
+  for every model before falling at turn 4.
 resultsCaption: >-
   Multi-turn attack success rate by turn, alongside Partial Compliance Rate,
   Safety Erosion Rate, and Harm Depth Score. Lower is safer.

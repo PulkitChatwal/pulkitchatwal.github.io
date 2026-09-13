@@ -16,6 +16,7 @@ figureCaption: >-
   Each client fuses frozen Wav2Vec2 and RoBERTa embeddings through bidirectional
   cross-modal attention, then a shared residual backbone with task-specific heads.
   Only head parameters are communicated; raw data stays on-device.
+figureCaptionInImage: true
 summary: >-
   Federated framework fusing Wav2Vec2 and RoBERTa via cross-modal attention for
   sentiment, emotion, humour, toxicity, and sarcasm; ~10 point gain over the best

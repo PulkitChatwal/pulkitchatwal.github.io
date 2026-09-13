@@ -27,6 +27,9 @@ const publications = defineCollection({
     // Optional teaser figure: filename inside src/assets/papers/, plus a caption.
     figure: z.string().optional(),
     figureCaption: z.string().optional(),
+    // True when the caption is already rendered inside the image file,
+    // in which case it is used as alt text only and not printed again.
+    figureCaptionInImage: z.boolean().optional(),
     // Optional inline results table, rendered as real text (not an image).
     resultsCaption: z.string().optional(),
     resultsColumns: z.array(z.string()).optional(),
