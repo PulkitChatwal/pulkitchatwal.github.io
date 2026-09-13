@@ -43,7 +43,7 @@ export const competencies = [
     methods: 'vLLM · TGI · llama.cpp · Triton · SGLang · AirLLM',
     detail:
       'Paged KV-cache eviction and attention optimization for higher-throughput inference serving.',
-    evidence: ['SKive-vLLM'],
+    evidence: [],
   },
 ] as const;
 

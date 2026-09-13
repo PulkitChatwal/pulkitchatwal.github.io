@@ -13,6 +13,8 @@ authors:
   - "P. Deswal"
   - "H. P. Singh"
   - "S. K. Mishra"
+figure: "nuggetjudge-consistency.jpg"
+figureCaption: "Nugget-score consistency among top-ranked systems."
 summary: >-
   Zero-shot nugget verification for retrieval-grounded reports on a single T4 GPU,
   comparing Qwen2-0.5B, Qwen2-1.5B, and Qwen2.5-0.5B as judges; ranked 13th of 21

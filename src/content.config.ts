@@ -24,6 +24,13 @@ const publications = defineCollection({
     year: z.number().optional(),
     tag: z.string().optional(),
     preprint: z.string().optional(),
+    // Optional teaser figure: filename inside src/assets/papers/, plus a caption.
+    figure: z.string().optional(),
+    figureCaption: z.string().optional(),
+    // Optional inline results table, rendered as real text (not an image).
+    resultsCaption: z.string().optional(),
+    resultsColumns: z.array(z.string()).optional(),
+    resultsRows: z.array(z.array(z.string())).optional(),
     authors: z.array(z.string()).optional(),
     advisor: z.string().optional(),
     summary: z.string(),

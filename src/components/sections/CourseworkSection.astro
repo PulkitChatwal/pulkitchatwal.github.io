@@ -22,7 +22,9 @@ import { competencies, coursework, stack } from '../../data/skills';
           <p class="font-mono text-xs leading-relaxed text-stone-500 dark:text-stone-500">{item.methods}</p>
           <p class="mt-2 text-[0.925rem] leading-relaxed text-stone-600 dark:text-stone-400">{item.detail}</p>
           <div class="mt-3 flex flex-wrap items-center gap-2">
-            <span class="text-xs text-stone-400 dark:text-stone-600">Applied in</span>
+            {item.evidence.length > 0 && (
+              <span class="text-xs text-stone-400 dark:text-stone-600">Applied in</span>
+            )}
             {item.evidence.map((tag) => (
               <a
                 href="#research"

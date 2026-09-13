@@ -33,7 +33,7 @@ const ongoing = publications
   <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
     Eleven publications spanning financial safety, multilingual and cross-cultural NLP, multimodal
     affect recognition, and applied evaluation — seven published, two accepted, one under review, and
-    one manuscript ready — with more to come, plus two research threads in progress. Sorted by year.
+    one manuscript ready — with more to come, plus one research thread in progress. Sorted by year.
   </p>
 
   <div class="mt-10 space-y-14">
@@ -51,6 +51,11 @@ const ongoing = publications
               preprint={pub.data.preprint}
               authors={pub.data.authors}
               summary={pub.data.summary}
+              figure={pub.data.figure}
+              figureCaption={pub.data.figureCaption}
+              resultsCaption={pub.data.resultsCaption}
+              resultsColumns={pub.data.resultsColumns}
+              resultsRows={pub.data.resultsRows}
               link={pub.data.link}
             />
           ))}
@@ -72,6 +77,11 @@ const ongoing = publications
             preprint={pub.data.preprint}
             advisor={pub.data.advisor}
             summary={pub.data.summary}
+            figure={pub.data.figure}
+            figureCaption={pub.data.figureCaption}
+            resultsCaption={pub.data.resultsCaption}
+            resultsColumns={pub.data.resultsColumns}
+            resultsRows={pub.data.resultsRows}
             link={pub.data.link}
           />
         ))}
