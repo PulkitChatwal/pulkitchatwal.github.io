@@ -4,7 +4,7 @@ export const site = {
   // Plain-text version, used for meta descriptions. The Home page renders a
   // richer version of this sentence with Voxx Agent linked.
   pitch:
-    'AI Engineer bridging research and production — seven published papers in financial safety, multilingual NLP, and multimodal alignment, with more accepted and under review, and one of the founding engineers and part of the lead developer team on Voxx Agent, a voice AI product deployed across enterprise clients.',
+    'Integrated Dual Degree (B.Tech. + M.Tech.) graduate in Computer Science and Artificial Intelligence from RGIPT. Research interests in Large Language Models, LLM safety and evaluation, multilingual NLP, and misinformation and disinformation. Seven published papers, with more accepted and under review. Currently looking for PhD opportunities.',
   affiliation:
     'Integrated Dual Degree (B.Tech + M.Tech), CSE & AI, Rajiv Gandhi Institute of Petroleum Technology (RGIPT) — An Institute of National Importance',
   advisor: 'Dr. Santosh Kumar Mishra',
@@ -48,6 +48,7 @@ export const interests = [
   'AI Harnesses',
   'Explainable AI (XAI)',
   'Red-teaming & Jailbreak Robustness',
+  'Misinformation & Disinformation',
   'Multilingual & Cross-Cultural NLP',
   'Financial & Regulatory NLP',
   'Multimodal Alignment',
