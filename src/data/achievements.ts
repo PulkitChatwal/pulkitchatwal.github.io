@@ -22,6 +22,14 @@ export const achievements = [
     description: 'National finalist, based on the ESG platform from SIH 2023.',
   },
   {
+    title: 'ACM SIGIR Student Travel Grant',
+    org: 'ACM Special Interest Group on Information Retrieval',
+    date: '2024',
+    amount: '₹5,000',
+    description:
+      'Competitive travel grant awarded to attend FIRE 2024 and present the Indian language summarization work on code-mixing and script-mixing.',
+  },
+  {
     title: 'Qualified JEE Main, JEE Advanced & IISER Aptitude Test (IAT)',
     org: 'National entrance examinations, India',
     date: '2021',
