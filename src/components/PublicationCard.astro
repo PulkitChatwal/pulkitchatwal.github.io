@@ -3,7 +3,7 @@ import StatusBadge from './StatusBadge.astro';
 
 interface Props {
   title: string;
-  status: 'under-review' | 'accepted' | 'published' | 'in-progress';
+  status: 'under-review' | 'manuscript-ready' | 'accepted' | 'published' | 'in-progress';
   venue?: string;
   date?: string;
   tag?: string;
@@ -54,7 +54,8 @@ const { title, status, venue, date, tag, preprint, authors, advisor, summary, li
 
     {(venue || date) && (
       <p class="mt-1.5 text-sm text-stone-500 italic dark:text-stone-500">
-        In {venue}{venue && date && ', '}{date}
+        {/* A venue that already reads as a sentence ("Targeting …") shouldn't get an "In" prefix. */}
+        {venue?.startsWith('Targeting') ? '' : 'In '}{venue}{venue && date && ', '}{date}
       </p>
     )}
 

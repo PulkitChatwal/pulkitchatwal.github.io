@@ -1,10 +1,11 @@
 ---
 title: "Federated Multi-Task Holistic Affect Recognition via Bidirectional Cross-Modal Attention"
-status: under-review
+status: accepted
 theme: multimodal
 year: 2026
 tag: "FedAffect"
 venue: "IEEE SLT 2026"
+date: "Sep 2026"
 order: 1
 authors:
   - "Priyanshu"

@@ -1,5 +1,9 @@
 export const news = [
   {
+    date: 'Sep 2026',
+    text: 'Federated Multi-Task Holistic Affect Recognition accepted at IEEE SLT 2026.',
+  },
+  {
     date: 'Jul 2026',
     text: 'Paper on ultra-lightweight LLM judges for nugget-based report evaluation at the RAG4Reports Workshop, ACL 2026.',
   },

@@ -66,7 +66,7 @@ export const education = [
 ] as const;
 
 export const highlights = [
-  '7 published papers · 3 accepted or under review',
+  '7 published papers · 4 accepted, under review, or in preparation',
   '2× Smart India Hackathon winner',
   '4 international conference presentations',
   'One of the founding engineers, Voxx Agent',

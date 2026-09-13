@@ -5,7 +5,13 @@ const publications = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/publications' }),
   schema: z.object({
     title: z.string(),
-    status: z.enum(['under-review', 'accepted', 'published', 'in-progress']),
+    status: z.enum([
+      'under-review',
+      'manuscript-ready',
+      'accepted',
+      'published',
+      'in-progress',
+    ]),
     theme: z.enum([
       'financial-safety',
       'multilingual',
