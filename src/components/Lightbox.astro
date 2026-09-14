@@ -1,0 +1,209 @@
+---
+/**
+ * Click-to-zoom lightbox for any <img data-zoomable>.
+ *
+ * Uses a FLIP animation: the clicked thumbnail's exact rect is measured, a clone
+ * is pinned there, then animated to its final centred size. The image therefore
+ * appears to physically expand out of the page rather than cross-fading in.
+ *
+ * No dependencies, no framework, ~2KB. Honours prefers-reduced-motion.
+ */
+---
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[100] hidden items-center justify-center"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Expanded image"
+>
+  <div id="lightbox-backdrop" class="absolute inset-0 bg-stone-950/80 opacity-0 backdrop-blur-sm"></div>
+
+  <button
+    id="lightbox-close"
+    type="button"
+    aria-label="Close expanded image"
+    class="absolute top-4 right-4 z-10 grid size-10 place-items-center rounded-full border border-white/25 bg-stone-950/50 text-white/90 opacity-0 transition hover:border-white/50 hover:text-white"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="size-5">
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  </button>
+
+  <figcaption
+    id="lightbox-caption"
+    class="pointer-events-none absolute inset-x-0 bottom-0 z-10 mx-auto max-w-3xl px-6 pb-6 text-center text-sm leading-relaxed text-white/80 opacity-0"
+  ></figcaption>
+</div>
+
+<script is:inline>
+  (() => {
+    if (window.__lightboxBound) return;
+    window.__lightboxBound = true;
+
+    const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+    const root = document.getElementById('lightbox');
+    const backdrop = document.getElementById('lightbox-backdrop');
+    const closeBtn = document.getElementById('lightbox-close');
+    const caption = document.getElementById('lightbox-caption');
+    if (!root || !backdrop || !closeBtn || !caption) return;
+
+    const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let clone = null;
+    let source = null;
+    let animating = false;
+    let openAnim = null;
+
+    /** Largest rect with the image's aspect ratio that fits the viewport. */
+    const targetRect = (nw, nh) => {
+      const padX = window.innerWidth < 640 ? 24 : 72;
+      const padY = window.innerWidth < 640 ? 72 : 96;
+      const maxW = window.innerWidth - padX * 2;
+      const maxH = window.innerHeight - padY * 2;
+      const scale = Math.min(maxW / nw, maxH / nh);
+      const w = nw * scale;
+      const h = nh * scale;
+      return { w, h, x: (window.innerWidth - w) / 2, y: (window.innerHeight - h) / 2 };
+    };
+
+    const fade = (el, to, ms) =>
+      el.animate([{ opacity: getComputedStyle(el).opacity }, { opacity: to }], {
+        duration: reduced() ? 0 : ms,
+        easing: 'ease',
+        fill: 'forwards',
+      });
+
+    function open(img) {
+      if (animating) return;
+      animating = true;
+      source = img;
+
+      const from = img.getBoundingClientRect();
+      const nw = img.naturalWidth || from.width;
+      const nh = img.naturalHeight || from.height;
+      const to = targetRect(nw, nh);
+
+      clone = document.createElement('img');
+      clone.src = img.currentSrc || img.src;
+      // Pull the sharpest candidate now that it is displayed much larger.
+      if (img.srcset) {
+        clone.srcset = img.srcset;
+        clone.sizes = '100vw';
+      }
+      clone.alt = img.alt || '';
+      clone.decoding = 'sync';
+      clone.style.cssText =
+        `position:fixed;margin:0;left:0;top:0;width:${from.width}px;height:${from.height}px;` +
+        `transform:translate(${from.left}px,${from.top}px);transform-origin:top left;` +
+        `border-radius:12px;z-index:5;will-change:transform,width,height;` +
+        `background:#fff;object-fit:contain;`;
+
+      root.classList.remove('hidden');
+      root.classList.add('flex');
+      document.documentElement.style.overflow = 'hidden';
+      root.appendChild(clone);
+
+      // The original stays in the layout but is hidden, so the clone reads as the same object.
+      img.style.visibility = 'hidden';
+
+      caption.textContent =
+        img.closest('figure')?.querySelector('figcaption')?.textContent?.trim() || img.alt || '';
+
+      fade(backdrop, 1, 260);
+      openAnim = clone.animate(
+        [
+          { width: `${from.width}px`, height: `${from.height}px`, transform: `translate(${from.left}px,${from.top}px)` },
+          { width: `${to.w}px`, height: `${to.h}px`, transform: `translate(${to.x}px,${to.y}px)` },
+        ],
+        { duration: reduced() ? 0 : 380, easing: EASE, fill: 'forwards' }
+      );
+      openAnim.onfinish = () => {
+        fade(closeBtn, 1, 180);
+        if (caption.textContent) fade(caption, 1, 180);
+        closeBtn.focus({ preventScroll: true });
+        animating = false;
+      };
+    }
+
+    function close() {
+      if (!clone || !source) return;
+      // Interrupting the opening animation is fine - freeze it where it is and
+      // fly back from there, so a click during the zoom still feels responsive.
+      if (openAnim && openAnim.playState === 'running') {
+        openAnim.commitStyles();
+        openAnim.cancel();
+      }
+      openAnim = null;
+      animating = true;
+
+      const to = source.getBoundingClientRect();
+      const cur = clone.getBoundingClientRect();
+
+      fade(closeBtn, 0, 120);
+      fade(caption, 0, 120);
+      fade(backdrop, 0, 260);
+
+      const DUR = reduced() ? 0 : 300;
+      const back = clone.animate(
+        [
+          { width: `${cur.width}px`, height: `${cur.height}px`, transform: `translate(${cur.left}px,${cur.top}px)` },
+          { width: `${to.width}px`, height: `${to.height}px`, transform: `translate(${to.left}px,${to.top}px)` },
+        ],
+        { duration: DUR, easing: EASE, fill: 'forwards' }
+      );
+
+      let torndown = false;
+      const teardown = () => {
+        if (torndown) return;
+        torndown = true;
+        if (source) source.style.visibility = '';
+        clone?.remove();
+        clone = null;
+        source = null;
+        root.classList.add('hidden');
+        root.classList.remove('flex');
+        document.documentElement.style.overflow = '';
+        animating = false;
+      };
+      back.onfinish = teardown;
+      // The document timeline freezes while a tab is hidden, so `onfinish` may
+      // never fire. Never leave the overlay stuck: tear down regardless.
+      setTimeout(teardown, DUR + 220);
+    }
+
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest?.('img[data-zoomable]');
+      if (img && !clone) {
+        e.preventDefault();
+        open(img);
+        return;
+      }
+      // Click anywhere on the overlay (including the image) closes it.
+      if (clone && (e.target === backdrop || e.target === clone || e.target === root || e.target.closest('#lightbox-close'))) {
+        close();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && clone) close();
+    });
+
+    // A resize mid-zoom would leave the clone misplaced; just close.
+    window.addEventListener('resize', () => clone && !animating && close());
+  })();
+</script>
+
+<style>
+  :global(img[data-zoomable]) {
+    cursor: zoom-in;
+    transition: filter 0.2s ease;
+  }
+  :global(img[data-zoomable]:hover) {
+    filter: brightness(0.94);
+  }
+  #lightbox img {
+    cursor: zoom-out;
+    box-shadow: 0 24px 60px -12px rgb(0 0 0 / 0.5);
+  }
+</style>

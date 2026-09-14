@@ -98,18 +98,28 @@ const capabilities = [
     a deterministic action layer so operations teams can automate with predictable behaviour.
   </p>
 
-  <a href={voxxUrl} target="_blank" rel="noopener noreferrer" class="group mt-6 block" data-reveal>
+  <figure class="mt-6" data-reveal>
     <Image
       src={voxxScreenshot}
       alt="Voxx Agent landing page, showing an active AI agent handling a delivery exception with live intent, action, latency, and confidence telemetry."
-      class="w-full rounded-xl border border-stone-200 transition group-hover:border-accent-300 dark:border-stone-800 dark:group-hover:border-accent-700"
-      widths={[600, 1200]}
+      data-zoomable
+      class="w-full rounded-xl border border-stone-200 dark:border-stone-800"
+      widths={[600, 1200, 2000]}
       sizes="(min-width: 768px) 768px, 100vw"
     />
     <figcaption class="mt-2 font-mono text-xs text-stone-500 dark:text-stone-500">
-      voxxagent.ai — the live product surface.
+      Click to enlarge &middot;{' '}
+      <a
+        href={voxxUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-accent-700 hover:underline dark:text-accent-400"
+      >
+        voxxagent.ai
+      </a>{' '}
+      — the live product surface.
     </figcaption>
-  </a>
+  </figure>
 
   <h3 class="mt-10 text-sm font-semibold tracking-wide text-stone-500 uppercase dark:text-stone-400" data-reveal>
     Core capabilities

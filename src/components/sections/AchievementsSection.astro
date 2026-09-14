@@ -58,8 +58,9 @@ const photos = Object.entries(photoModules)
           <Image
             src={photo.src}
             alt={photo.caption}
+            data-zoomable
             class="aspect-[3/2] w-full rounded-xl object-cover"
-            widths={[400, 800]}
+            widths={[400, 800, 1600]}
             sizes="(min-width: 640px) 33vw, 100vw"
           />
           <figcaption class="mt-2 font-mono text-xs leading-relaxed text-stone-500 dark:text-stone-500">
