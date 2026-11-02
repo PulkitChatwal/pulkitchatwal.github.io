@@ -2,8 +2,8 @@
 import { competencies, coursework, stack } from '../../data/skills';
 ---
 
-<section id="coursework" class="mx-auto max-w-4xl scroll-mt-24 px-6 py-14">
-  <h2 class="font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>
+<section id="coursework" class="mx-auto max-w-4xl scroll-mt-24 px-6 py-9">
+  <h2 class="border-b border-stone-300 pb-2 font-serif text-xl font-semibold tracking-tight text-stone-900 dark:border-stone-700 dark:text-stone-100" data-reveal>
     Coursework &amp; Skills
   </h2>
   <p class="mt-4 max-w-2xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
@@ -49,12 +49,8 @@ import { competencies, coursework, stack } from '../../data/skills';
     {coursework.map((group) => (
       <div class="grid gap-2 border-t border-stone-200 py-4 sm:grid-cols-[13rem_1fr] sm:gap-8 dark:border-stone-800" data-reveal>
         <dt class="text-sm font-medium text-stone-500 dark:text-stone-400">{group.group}</dt>
-        <dd class="flex flex-wrap gap-2">
-          {group.courses.map((course) => (
-            <span class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-700 dark:border-stone-800 dark:text-stone-300">
-              {course}
-            </span>
-          ))}
+        <dd class="text-[0.925rem] leading-relaxed text-stone-700 dark:text-stone-300">
+          {group.courses.join(', ')}
         </dd>
       </div>
     ))}
@@ -67,12 +63,8 @@ import { competencies, coursework, stack } from '../../data/skills';
     {stack.map((group) => (
       <div class="grid gap-2 border-t border-stone-200 py-4 sm:grid-cols-[13rem_1fr] sm:gap-8 dark:border-stone-800" data-reveal>
         <dt class="text-sm font-medium text-stone-500 dark:text-stone-400">{group.group}</dt>
-        <dd class="flex flex-wrap gap-2">
-          {group.tags.map((tag) => (
-            <span class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-700 dark:border-stone-800 dark:text-stone-300">
-              {tag}
-            </span>
-          ))}
+        <dd class="text-[0.925rem] leading-relaxed text-stone-700 dark:text-stone-300">
+          {group.tags.join(', ')}
         </dd>
       </div>
     ))}

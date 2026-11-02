@@ -6,7 +6,7 @@ const [firstName, ...rest] = site.name.split(' ');
 const lastName = rest.join(' ');
 ---
 
-<section id="about" class="mx-auto max-w-4xl scroll-mt-24 px-6 pt-16 pb-12 sm:pt-20">
+<section id="about" class="mx-auto max-w-4xl scroll-mt-24 px-6 pt-12 pb-8 sm:pt-14">
   <h1 class="font-serif text-5xl tracking-tight text-stone-900 sm:text-6xl dark:text-stone-100" data-reveal>
     <span class="font-bold">{firstName}</span> <span class="font-light">{lastName}</span>
   </h1>
@@ -65,19 +65,12 @@ const lastName = rest.join(' ');
     {highlights.map((item) => <span>{item}</span>)}
   </div>
 
-  <h2 class="mt-16 font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>Interests</h2>
-  <div class="mt-5 flex flex-wrap gap-2">
-    {interests.map((item) => (
-      <span
-        class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-700 dark:border-stone-800 dark:text-stone-300"
-        data-reveal
-      >
-        {item}
-      </span>
-    ))}
-  </div>
+  <h2 class="mt-12 border-b border-stone-300 pb-2 font-serif text-xl font-semibold tracking-tight text-stone-900 dark:border-stone-700 dark:text-stone-100" data-reveal>Interests</h2>
+  <p class="mt-4 max-w-3xl leading-relaxed text-stone-600 dark:text-stone-400" data-reveal>
+    {interests.join(' · ')}
+  </p>
 
-  <h2 class="mt-16 font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>Education</h2>
+  <h2 class="mt-12 border-b border-stone-300 pb-2 font-serif text-xl font-semibold tracking-tight text-stone-900 dark:border-stone-700 dark:text-stone-100" data-reveal>Education</h2>
   <dl class="mt-5">
     {education.map((item) => (
       <div class="grid gap-1 border-t border-stone-200 py-4 sm:grid-cols-[8rem_1fr] sm:gap-4 dark:border-stone-800" data-reveal>
@@ -98,7 +91,7 @@ const lastName = rest.join(' ');
     ))}
   </dl>
 
-  <h2 class="mt-16 font-serif text-3xl font-normal text-stone-900 dark:text-stone-100" data-reveal>News</h2>
+  <h2 class="mt-12 border-b border-stone-300 pb-2 font-serif text-xl font-semibold tracking-tight text-stone-900 dark:border-stone-700 dark:text-stone-100" data-reveal>News</h2>
   <dl class="mt-5">
     {news.map((item) => (
       <div class="grid gap-1 border-t border-stone-200 py-3 sm:grid-cols-[8rem_1fr] sm:gap-4 dark:border-stone-800" data-reveal>
