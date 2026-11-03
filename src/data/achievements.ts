@@ -1,10 +1,10 @@
 export const achievements = [
   {
     title: 'Reviewer, The ACM Web Conference (WWW) 2027',
-    org: 'Peer review service',
+    org: 'Academic service',
     date: 'Oct 2026',
     description:
-      'Invited to review submissions for one of the principal international venues for web and information systems research.',
+      'Reviewing up to four submissions for the 2027 edition, with reviews due December 2026.',
   },
   {
     title: 'Smart India Hackathon Winner',

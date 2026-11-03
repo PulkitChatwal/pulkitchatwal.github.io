@@ -1,7 +1,7 @@
 export const news = [
   {
     date: 'Oct 2026',
-    text: 'Invited to serve as a reviewer for The ACM Web Conference (WWW) 2027.',
+    text: 'Joined the reviewer pool for The ACM Web Conference (WWW) 2027; reviews due December.',
   },
   {
     date: 'Sep 2026',
