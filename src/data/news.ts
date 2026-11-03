@@ -1,5 +1,9 @@
 export const news = [
   {
+    date: 'Oct 2026',
+    text: 'Invited to serve as a reviewer for The ACM Web Conference (WWW) 2027.',
+  },
+  {
     date: 'Sep 2026',
     text: 'Federated Multi-Task Holistic Affect Recognition accepted at IEEE SLT 2026.',
   },
