@@ -23,6 +23,7 @@ interface Props {
   figure?: string;
   figureCaption?: string;
   figureCaptionInImage?: boolean;
+  extraFigures?: { file: string; caption?: string; captionInImage?: boolean }[];
   resultsCaption?: string;
   resultsColumns?: string[];
   resultsRows?: string[][];
@@ -30,10 +31,16 @@ interface Props {
 
 const {
   title, status, venue, date, tag, preprint, authors, advisor, summary, link,
-  figure, figureCaption, figureCaptionInImage, resultsCaption, resultsColumns, resultsRows,
+  figure, figureCaption, figureCaptionInImage, extraFigures, resultsCaption, resultsColumns, resultsRows,
 } = Astro.props;
 
-const figureImage = figure ? figures[`/src/assets/papers/${figure}`]?.default : undefined;
+// The single `figure` field stays the main figure; `extraFigures` follow it.
+const figureList = [
+  ...(figure ? [{ file: figure, caption: figureCaption, captionInImage: figureCaptionInImage }] : []),
+  ...(extraFigures ?? []),
+]
+  .map((f) => ({ ...f, image: figures[`/src/assets/papers/${f.file}`]?.default }))
+  .filter((f) => f.image);
 const hasResults = !!(resultsColumns?.length && resultsRows?.length);
 ---
 
@@ -93,23 +100,23 @@ const hasResults = !!(resultsColumns?.length && resultsRows?.length);
 
     <p class="mt-3 text-[0.925rem] leading-relaxed text-stone-600 dark:text-stone-400">{summary}</p>
 
-    {figureImage && (
+    {figureList.map((f) => (
       <figure class="mt-4">
         <Image
-          src={figureImage}
-          alt={figureCaption ?? `Figure from ${title}`}
+          src={f.image!}
+          alt={f.caption ?? `Figure from ${title}`}
           data-zoomable
           class="w-full max-w-xl rounded-lg border border-stone-200 bg-white dark:border-stone-800"
           widths={[440, 880, 1600]}
           sizes="(min-width: 768px) 576px, 100vw"
         />
-        {figureCaption && !figureCaptionInImage && (
+        {f.caption && !f.captionInImage && (
           <figcaption class="mt-2 max-w-xl text-xs leading-relaxed text-stone-500 dark:text-stone-500">
-            {figureCaption}
+            {f.caption}
           </figcaption>
         )}
       </figure>
-    )}
+    ))}
 
     {hasResults && (
       <figure class="mt-4 max-w-xl">

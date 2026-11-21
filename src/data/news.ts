@@ -1,7 +1,11 @@
 export const news = [
   {
+    date: 'Nov 2026',
+    text: 'FinHingGuard accepted to the AAAI 2027 Student Abstract and Poster Program.',
+  },
+  {
     date: 'Oct 2026',
-    text: 'Joined the reviewer pool for The ACM Web Conference (WWW) 2027; reviews due December.',
+    text: 'Reviewer for The ACM Web Conference (WWW) 2027.',
   },
   {
     date: 'Sep 2026',

@@ -30,6 +30,16 @@ const publications = defineCollection({
     // True when the caption is already rendered inside the image file,
     // in which case it is used as alt text only and not printed again.
     figureCaptionInImage: z.boolean().optional(),
+    // Further figures shown after the main one, for papers that need more than one.
+    extraFigures: z
+      .array(
+        z.object({
+          file: z.string(),
+          caption: z.string().optional(),
+          captionInImage: z.boolean().optional(),
+        })
+      )
+      .optional(),
     // Optional inline results table, rendered as real text (not an image).
     resultsCaption: z.string().optional(),
     resultsColumns: z.array(z.string()).optional(),

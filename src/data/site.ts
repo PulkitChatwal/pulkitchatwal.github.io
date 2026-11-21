@@ -4,7 +4,7 @@ export const site = {
   // Plain-text version, used for meta descriptions. The Home page renders a
   // richer version of this sentence with Voxx Agent linked.
   pitch:
-    'Integrated Dual Degree (B.Tech. + M.Tech.) graduate in Computer Science and Artificial Intelligence from RGIPT. Research interests in Large Language Models, LLM safety and evaluation, multilingual NLP, and misinformation and disinformation. Seven published papers, with more accepted and under review. Currently looking for PhD opportunities.',
+    'Integrated Dual Degree (B.Tech. + M.Tech.) graduate in Computer Science and Artificial Intelligence from RGIPT. Research interests in Large Language Models, LLM safety and evaluation, multilingual NLP, and misinformation and disinformation. Peer-reviewed publications in LLM safety, evaluation, and multilingual NLP. Currently looking for PhD opportunities.',
   affiliation:
     'Integrated Dual Degree (B.Tech + M.Tech), CSE & AI, Rajiv Gandhi Institute of Petroleum Technology (RGIPT) — An Institute of National Importance',
   advisor: 'Dr. Santosh Kumar Mishra',
@@ -67,7 +67,7 @@ export const education = [
 ] as const;
 
 export const highlights = [
-  '7 published papers · 4 accepted, under review, or in preparation',
+  'Peer-reviewed publications at ACL, AAAI, IEEE, and ACM venues',
   '2× Smart India Hackathon winner',
   '4 international conference presentations',
   'One of the founding engineers, Voxx Agent',
